@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://oxi0faaf0ebe"]
+
+[ext_resource type="Script" uid="uid://geqal2lr8vca" path="res://enemy.gd" id="1_7k104"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_7xaro"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7k104"]
+albedo_color = Color(0.905032, 0, 0.0175815, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7k104"]
+
+[node name="Enemy" type="CharacterBody3D"]
+script = ExtResource("1_7k104")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_7xaro")
+surface_material_override/0 = SubResource("StandardMaterial3D_7k104")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_7k104")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+aabb = AABB(-0.498676, -0.503329, -0.4983, 0.997353, 1.00666, 0.9966)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+target_desired_distance = 1.5
+
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
